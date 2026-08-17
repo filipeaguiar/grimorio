@@ -38,13 +38,21 @@ Mão Espectral
 
 ## 3. Estado e Persistência
 - **Dados do Grimório**: O texto bruto de magias é salvo no `localStorage` sob a chave `grimorio_raw_text`.
+- **Nível do Personagem**: O nível do conjurador é salvo no `localStorage` sob a chave `grimorio_char_level` e calcula automaticamente dados de dano, duração, alcance e bônus de magias escalonáveis (ex: *Bola de Fogo*, *Cone Glacial*, *Mísseis Mágicos*, *Pele Rochosa*, *Identificação*, etc.).
 - **Carga/Alocação de Slots**: O número de slots alocados a círculos e magias individuais é controlado diretamente via botões de `+` e `−` na tela de jogo e é salvo no `localStorage` sob o mapa `grimorio_slots`.
 - **Estado de Jogo (Checkboxes)**: O estado marcado (`checked`) de cada slot de uso é salvo no `localStorage` usando um ID único baseado na assinatura da seção/posição do item.
 - **Botão de Reset**: Permite desmarcar todos os slots (limpar preparação/gastos) ao iniciar um novo dia de descanso (Descanso Longo).
 
 ---
 
-## 4. Design e Estética
+## 4. Categorias e Sub-Abas
+- **Magias Arcanas**: Círculos arcanos de 1º a 9º.
+- **Magias de Necromante**: Magias exclusivas e especializadas de necromancia.
+- **Magias Divinas**: Preces e milagres para clérigos de 1º a 7º círculo.
+
+---
+
+## 5. Design e Estética
 - **Tema Escuro Místico**: Paleta inspirada em fantasia dark medieval.
 - **Responsividade**: Layout adaptado para uso em smartphones e tablets na mesa de jogo.
 - **Tipografia**: Uso de fontes serifadas elegantes para títulos RPG clássicos e fontes limpas para leitura.

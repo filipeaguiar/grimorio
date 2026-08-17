@@ -192,6 +192,195 @@ function getSectionType(title) {
   return 'arcano';
 }
 
+// Character Level Management & Spell Calculations
+function getCharacterLevel() {
+  const lvl = parseInt(localStorage.getItem('grimorio_char_level'), 10);
+  return isNaN(lvl) || lvl < 1 ? 1 : lvl;
+}
+
+function setCharacterLevel(lvl) {
+  const safeLvl = Math.max(1, Math.min(20, parseInt(lvl, 10) || 1));
+  localStorage.setItem('grimorio_char_level', safeLvl.toString());
+  const display = document.getElementById('char-level-display');
+  if (display) display.textContent = safeLvl;
+  renderPlayView(editorTextarea.value);
+}
+
+function changeCharacterLevel(delta) {
+  const current = getCharacterLevel();
+  setCharacterLevel(current + delta);
+}
+
+function getSpellLevelCalculation(spellName, level) {
+  if (!spellName) return null;
+  const norm = spellName.trim().toLowerCase();
+  const lvl = Math.max(1, parseInt(level, 10) || 1);
+
+  switch (norm) {
+    case 'bola de fogo':
+      return {
+        badge: `🔥 ${lvl}d6 dano`,
+        summary: `💥 Dano: ${lvl}d6 de fogo (raio de 6m)`,
+        extra: `1d6 pontos de dano de fogo por nível de conjurador (JPD reduz metade).`
+      };
+    case 'relâmpago':
+      return {
+        badge: `⚡ ${lvl}d6 dano`,
+        summary: `⚡ Dano: ${lvl}d6 elétrico (linha de 1,5m × 18m)`,
+        extra: `1d6 pontos de dano elétrico por nível de conjurador (JPD reduz metade).`
+      };
+    case 'mísseis mágicos': {
+      const missiles = Math.min(5, Math.max(1, 1 + Math.floor((lvl - 1) / 3)));
+      return {
+        badge: `✨ ${missiles}× (${missiles}d4+${missiles})`,
+        summary: `✨ Projéteis: ${missiles} míssil(eis) mágica(s)`,
+        extra: `🎯 Dano Total: ${missiles}d4 + ${missiles} (1 míssil a cada 3 níveis, máx 5 mísseis no 13º nível).`
+      };
+    }
+    case 'cone glacial':
+      return {
+        badge: `❄️ ${lvl}d4+${lvl} dano`,
+        summary: `❄️ Dano: ${lvl}d4 + ${lvl} pontos de frio`,
+        extra: `📐 Dimensões do Cone: ${(lvl * 1.5).toFixed(1).replace('.0', '')}m de comprimento por ${Math.round(lvl * 30)}cm de diâmetro.`
+      };
+    case 'donzela de ferro': {
+      const dice = Math.min(7, Math.max(1, Math.floor(lvl / 2)));
+      return {
+        badge: `💀 ${dice}d6 + 1d10 CON`,
+        summary: `💀 Dano: ${dice}d6 de dano e 1d10 em Constituição`,
+        extra: `📏 Alcance: ${3 + lvl}m | ⏳ Duração: ${lvl} rodada(s) (condição [MD], máx 7d6).`
+      };
+    }
+    case 'armadura elétrica': {
+      const dice = Math.max(1, Math.floor(lvl / 2));
+      return {
+        badge: `⚡ ${dice}d6 retaliação`,
+        summary: `⚡ Retaliação: ${dice}d6 de dano elétrico por ataque sofrido`,
+        extra: `⏳ Duração: ${lvl}d4 rodadas (1d6 a cada 2 níveis do mago).`
+      };
+    }
+    case 'magia da morte': {
+      const dice = Math.max(1, Math.floor(lvl / 2));
+      return {
+        badge: `☠️ ${dice}d8 em 7DV+`,
+        summary: `☠️ Criaturas até 4DV: Morte imediata | 5-6DV: JPC ou Morte`,
+        extra: `💥 Criaturas 7DV+: ${dice}d8 de dano (1d8 a cada 2 níveis, JPC reduz metade).`
+      };
+    }
+    case 'pele rochosa': {
+      const bonus = Math.floor(lvl / 2);
+      return {
+        badge: `🛡️ 1d4+${bonus} bloqueios`,
+        summary: `🛡️ Proteção: Bloqueia 1d4 + ${bonus} ataques físicos`,
+        extra: `⏳ Duração: ${lvl} turno(s) (1d4 + 1 bloqueio a cada 2 níveis).`
+      };
+    }
+    case 'identificação': {
+      const chance = Math.min(100, lvl * 5);
+      return {
+        badge: `🔍 2d6+${lvl} itens (${chance}%)`,
+        summary: `🔍 Identifica: 2d6 + ${lvl} itens mágicos`,
+        extra: `🎲 Chance de sucesso: ${chance}% (5% por nível).`
+      };
+    }
+    case 'coluna de chamas de agmi':
+      return {
+        badge: `🔥 6d8 (${9 + lvl}m)`,
+        summary: `🔥 Dano: 6d8 de fogo divino (coluna de 4,5m raio × 9m altura)`,
+        extra: `🏹 Alcance: ${9 + lvl}m (9m + 1m por nível, JPD reduz metade).`
+      };
+    case 'chuva de pedras de rasmum':
+      return {
+        badge: `🪨 15d8 + 7d8 (${9 + lvl * 3}m)`,
+        summary: `🪨 Dano Primário: 15d8 de dano por impacto`,
+        extra: `💥 Fragmentos Secundários: 7d8 de dano + atordoamento (2d4 rodadas) | 🏹 Alcance: ${9 + lvl * 3}m.`
+      };
+    case 'aumento de força':
+    case 'aumento de destreza':
+      return {
+        badge: `💪 +1d4+1 (${lvl}h)`,
+        summary: `💪 Bônus: +1d4+1 no atributo`,
+        extra: `⏳ Duração: ${lvl} hora(s) (1 hora por nível de clérigo).`
+      };
+    case 'augúrio': {
+      const chance = Math.min(100, 70 + lvl);
+      return {
+        badge: `🔮 ${chance}% chance`,
+        summary: `🔮 Chance de resposta significativa: ${chance}%`,
+        extra: `⏱️ Vislumbre: Ações nos próximos 30 minutos (70% + 1%/nível).`
+      };
+    }
+    case 'sementes de fogo':
+      return {
+        badge: `🌰 2d8/1d8 (${lvl} turnos)`,
+        summary: `🌰 Projéteis (até 4): 2d8 de dano | 🌿 Bombas (até 8): 1d8 de dano`,
+        extra: `⏳ Duração do encanto: ${lvl} turno(s) (1 turno por nível).`
+      };
+    case 'patas de aranha':
+      return {
+        badge: `🕷️ ${3 + lvl} turnos`,
+        summary: `🕷️ Escalar paredes e tetos livremente`,
+        extra: `⏳ Duração: ${3 + lvl} turnos (3 turnos + 1 turno/nível).`
+      };
+    case 'voo':
+      return {
+        badge: `🦅 ${lvl} turnos + 1d6`,
+        summary: `🦅 Voar com Movimento 12`,
+        extra: `⏳ Duração: ${lvl} turnos + 1d6 turnos (1 turno/nível + 1d6).`
+      };
+    case 'bênção':
+      return {
+        badge: `✨ +1 atk/JP (${lvl} turnos)`,
+        summary: `✨ Aura de 9m: +1 em ataques e +1 em todos os testes de resistência`,
+        extra: `⏳ Duração: ${lvl} turno(s) (1 turno por nível).`
+      };
+    case 'agredir':
+      return {
+        badge: `⚔️ +1d6 dano (${lvl} turnos)`,
+        summary: `⚔️ Encantamento de Arma: +1d6 de dano por ataque`,
+        extra: `⏳ Duração: ${lvl} turno(s) (1 turno por nível).`
+      };
+    case 'apodrecer sangue':
+      return {
+        badge: `🩸 +4 dano (1d4×${lvl} rod.)`,
+        summary: `🩸 +4 de dano por ataques de corte/perfuração`,
+        extra: `🏹 Alcance: ${9 + lvl * 3}m | ⏳ Duração: 1d4 × ${lvl} rodada(s).`
+      };
+    case 'forma ectoplásmica':
+      return {
+        badge: `👻 ${lvl * 3} rodadas`,
+        summary: `👻 Insubstancial e imune a ataques físicos normais`,
+        extra: `⏳ Duração: ${lvl * 3} rodadas (3 rodadas por nível).`
+      };
+    case 'mão espectral':
+      return {
+        badge: `🖐️ ${lvl} turnos`,
+        summary: `🖐️ Mão espectral flutuante (CA 24, Mov 12)`,
+        extra: `⏳ Duração: ${lvl} turno(s) (1 turno por nível).`
+      };
+    case 'parar cura':
+      return {
+        badge: `🚫 ${lvl} turnos`,
+        summary: `🚫 Impede qualquer cura (poções, magias, itens)`,
+        extra: `🏹 Alcance: ${3 + lvl * 3}m | ⏳ Duração: ${lvl} turno(s).`
+      };
+    case 'entumbar':
+      return {
+        badge: `⛰️ alcance ${9 + lvl * 3}m`,
+        summary: `⛰️ Prende o alvo em câmara subterrânea ou protege conjurador`,
+        extra: `🏹 Alcance: ${9 + lvl * 3}m (9m + 3m/nível).`
+      };
+    case 'muralha de energia':
+      return {
+        badge: `🛡️ 1 turno + ${lvl} rod.`,
+        summary: `🛡️ Barreira de força invulnerável e imóvel`,
+        extra: `⏳ Duração: 1 turno + ${lvl} rodada(s) (esfera até ${Math.round(lvl * 30)}cm raio).`
+      };
+    default:
+      return null;
+  }
+}
+
 // Initialize App
 document.addEventListener('DOMContentLoaded', () => {
   // Register Service Worker for PWA support
@@ -200,6 +389,11 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(() => console.log('Service Worker registrado com sucesso!'))
       .catch((err) => console.warn('Erro ao registrar Service Worker:', err));
   }
+
+  // Initialize character level display
+  const charLvl = getCharacterLevel();
+  const display = document.getElementById('char-level-display');
+  if (display) display.textContent = charLvl;
 
   // Initialize slots mapping in localStorage if not set or outdated
   if (!localStorage.getItem('grimorio_slots') || 
@@ -405,12 +599,28 @@ function renderPlayView(text) {
         const spellItem = document.createElement('div');
         spellItem.className = 'spell-item';
 
+        const nameContainer = document.createElement('div');
+        nameContainer.className = 'spell-name-container';
+
         const nameSpan = document.createElement('span');
         nameSpan.className = 'spell-name';
         nameSpan.textContent = item.name;
-        nameSpan.title = 'Clique para ver a descrição';
+        nameSpan.title = 'Clique para ver a descrição completa';
         nameSpan.addEventListener('click', () => showSpellDescription(item.name));
-        spellItem.appendChild(nameSpan);
+        nameContainer.appendChild(nameSpan);
+
+        const currentLvl = getCharacterLevel();
+        const calc = getSpellLevelCalculation(item.name, currentLvl);
+        if (calc && calc.badge) {
+          const badgeSpan = document.createElement('span');
+          badgeSpan.className = 'spell-calc-badge';
+          badgeSpan.textContent = calc.badge;
+          badgeSpan.title = `Cálculo automático para Nível ${currentLvl} (Clique para detalhes)`;
+          badgeSpan.addEventListener('click', () => showSpellDescription(item.name));
+          nameContainer.appendChild(badgeSpan);
+        }
+
+        spellItem.appendChild(nameContainer);
 
         // Controls container (checkboxes + quick adjust buttons)
         const controlsDiv = document.createElement('div');
@@ -593,6 +803,25 @@ function showSpellDescription(spellName) {
   const spell = key ? SPELL_DESCRIPTIONS[key] : null;
 
   if (spell) {
+    const charLvl = getCharacterLevel();
+    const calc = getSpellLevelCalculation(key, charLvl);
+    let calcCardHtml = '';
+    
+    if (calc) {
+      calcCardHtml = `
+        <div class="spell-modal-calc-card">
+          <div class="modal-calc-header">
+            <i class="ra ra-perspective-dice-six"></i>
+            <span>Cálculo Automático (<strong>Nível ${charLvl}</strong>)</span>
+          </div>
+          <div class="modal-calc-body">
+            <div class="modal-calc-summary">${calc.summary}</div>
+            ${calc.extra ? `<div class="modal-calc-extra">${calc.extra}</div>` : ''}
+          </div>
+        </div>
+      `;
+    }
+
     detailsContainer.innerHTML = `
       <h2 class="spell-modal-title">${key}</h2>
       <div class="spell-modal-meta">
@@ -601,6 +830,7 @@ function showSpellDescription(spellName) {
         <div class="spell-meta-item">Duração: <strong>${spell.duracao || 'N/A'}</strong></div>
         <div class="spell-meta-item">Resistência: <strong>${spell.resistencia || 'N/A'}</strong></div>
       </div>
+      ${calcCardHtml}
       <div class="spell-modal-desc">${spell.descricao}</div>
     `;
   } else {

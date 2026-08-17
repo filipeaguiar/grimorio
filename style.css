@@ -238,6 +238,78 @@ body {
   transform: translateY(-1px);
 }
 
+/* Character Level Badge & Stepper */
+.level-control-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(20, 16, 28, 0.7);
+  border: 1px solid rgba(255, 215, 102, 0.3);
+  padding: 0.25rem 0.65rem;
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  transition: var(--transition);
+}
+
+.level-control-badge:hover {
+  border-color: var(--accent-secondary);
+  box-shadow: 0 0 12px var(--gold-glow);
+}
+
+.level-icon {
+  color: var(--accent-secondary);
+  font-size: 0.95rem;
+}
+
+.level-label {
+  font-family: var(--font-title);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--accent-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.level-step-btn {
+  background: rgba(255, 215, 102, 0.1);
+  border: 1px solid rgba(255, 215, 102, 0.25);
+  color: var(--accent-secondary);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: bold;
+  line-height: 1;
+  transition: var(--transition);
+  padding: 0;
+}
+
+.level-step-btn:hover {
+  background: var(--accent-secondary);
+  color: #070509;
+  box-shadow: 0 0 8px var(--gold-glow);
+  transform: scale(1.1);
+}
+
+.level-step-btn:active {
+  transform: scale(0.95);
+}
+
+.level-display-value {
+  font-family: var(--font-title);
+  font-size: 0.95rem;
+  font-weight: 900;
+  color: #ffffff;
+  min-width: 1.2rem;
+  text-align: center;
+  text-shadow: 0 0 8px rgba(255, 215, 102, 0.5);
+}
+
 /* Grid & Circle Card Layout */
 .grimorio-grid {
   display: grid;
@@ -330,6 +402,13 @@ body {
   transform: translateX(2px);
 }
 
+.spell-name-container {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+
 .spell-name {
   font-size: 0.95rem;
   color: var(--text-primary);
@@ -342,6 +421,30 @@ body {
   color: var(--accent);
   text-decoration: none;
   text-shadow: 0 0 8px var(--accent-glow-strong);
+}
+
+.spell-calc-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-family: var(--font-body);
+  color: #ffd766;
+  background: rgba(255, 215, 102, 0.12);
+  border: 1px solid rgba(255, 215, 102, 0.3);
+  padding: 0.15rem 0.45rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: var(--transition);
+  line-height: 1.2;
+}
+
+.spell-calc-badge:hover {
+  background: rgba(255, 215, 102, 0.25);
+  border-color: #ffd766;
+  box-shadow: 0 0 8px rgba(255, 215, 102, 0.35);
+  transform: translateY(-1px);
 }
 
 /* Checkbox container */
@@ -586,7 +689,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.75rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
   font-size: 0.9rem;
   background-color: rgba(33, 26, 46, 0.6);
   padding: 1rem;
@@ -600,6 +703,49 @@ body {
 
 .spell-meta-item strong {
   color: var(--text-primary);
+}
+
+/* Modal Calculation Card */
+.spell-modal-calc-card {
+  background: linear-gradient(135deg, rgba(33, 26, 46, 0.9) 0%, rgba(45, 30, 60, 0.8) 100%);
+  border: 1px solid rgba(255, 215, 102, 0.35);
+  border-radius: var(--border-radius);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(255, 215, 102, 0.05);
+}
+
+.modal-calc-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-title);
+  font-size: 0.95rem;
+  color: var(--accent-secondary);
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 8px var(--gold-glow);
+}
+
+.modal-calc-header i {
+  font-size: 1.1rem;
+}
+
+.modal-calc-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.modal-calc-summary {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.3px;
+}
+
+.modal-calc-extra {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
 }
 
 .spell-modal-desc {

@@ -25,6 +25,13 @@
         <h1>Grimório</h1>
       </div>
       <div class="header-actions">
+        <div class="level-control-badge" title="Nível do Personagem (calcula dados de magias automaticamente)">
+          <i class="ra ra-double-team level-icon"></i>
+          <span class="level-label">Nvl</span>
+          <button class="level-step-btn" onclick="changeCharacterLevel(-1)" title="Diminuir Nível">−</button>
+          <span id="char-level-display" class="level-display-value">1</span>
+          <button class="level-step-btn" onclick="changeCharacterLevel(1)" title="Aumentar Nível">+</button>
+        </div>
         <nav class="app-tabs">
           <button id="tab-play" class="tab-btn active icon-only-btn" onclick="switchTab('play')" title="Jogo">
             <i class="ra ra-crossed-swords tab-icon"></i>
