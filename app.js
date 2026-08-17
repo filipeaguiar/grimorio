@@ -471,38 +471,43 @@ function loadDefaultSpells() {
   }
 }
 
-// Parser Logic - strips brackets if they are still input, keeps it simple
+// Parser Logic - strictly ignores extra line breaks, spaces, and empty lines
 function parseGrimorio(text) {
-  const lines = text.split('\n');
+  if (!text) return [];
+  const lines = text.split(/\r?\n/);
   const sections = [];
   let currentSection = null;
 
-  for (let line of lines) {
-    line = line.trim();
-    if (!line) continue;
+  for (let rawLine of lines) {
+    const line = rawLine.trim();
+    if (!line) continue; // Ignores all extra line breaks
 
     if (line.startsWith('#')) {
       // Matches # Title or # Title [N]
-      const match = line.match(/^#\s*(.*?)(?:\s*\[\d+\])?$/);
+      const match = line.match(/^#+\s*(.*?)(?:\s*\[\d+\])?$/);
       if (match) {
-        currentSection = {
-          title: match[1].trim(),
-          items: []
-        };
-        sections.push(currentSection);
+        const title = match[1].trim();
+        if (title) {
+          currentSection = {
+            title: title,
+            items: []
+          };
+          sections.push(currentSection);
+        }
       }
     } else {
       // Matches Item Name or Item Name [N]
       const match = line.match(/^(.*?)(?:\s*\[\d+\])?$/);
       if (match) {
-        const item = {
-          name: match[1].trim()
-        };
-        if (!currentSection) {
-          currentSection = { title: 'Geral', items: [] };
-          sections.push(currentSection);
+        const name = match[1].trim();
+        if (name) {
+          const item = { name };
+          if (!currentSection) {
+            currentSection = { title: 'Geral', items: [] };
+            sections.push(currentSection);
+          }
+          currentSection.items.push(item);
         }
-        currentSection.items.push(item);
       }
     }
   }
