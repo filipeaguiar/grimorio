@@ -461,6 +461,16 @@ function saveEditorContent() {
   switchTab('play');
 }
 
+// Load all default spells from the PDF into the editor
+function loadDefaultSpells() {
+  if (confirm('Deseja preencher o Grimório com todas as magias aprendidas do documento PDF?')) {
+    editorTextarea.value = DEFAULT_CONTENT;
+    localStorage.setItem('grimorio_raw_text', DEFAULT_CONTENT);
+    renderPlayView(DEFAULT_CONTENT);
+    switchTab('play');
+  }
+}
+
 // Parser Logic - strips brackets if they are still input, keeps it simple
 function parseGrimorio(text) {
   const lines = text.split('\n');

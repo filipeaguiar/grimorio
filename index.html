@@ -76,7 +76,12 @@
       <!-- Edit View -->
       <section id="view-edit" class="view">
         <div class="editor-header">
-          <h2>Edição do Grimório</h2>
+          <div class="editor-title-row">
+            <h2>Edição do Grimório</h2>
+            <button type="button" class="action-btn secondary-btn" onclick="loadDefaultSpells()" title="Preencher com todas as magias do documento">
+              <i class="ra ra-book btn-icon"></i> Carregar Todas do PDF
+            </button>
+          </div>
           <p class="help-text">Use <code># Categoria</code> para círculos/títulos e <code>Nome da Magia</code> nas linhas abaixo.</p>
         </div>
         <textarea id="editor-textarea" spellcheck="false" placeholder="# Categoria&#10;Magia"></textarea>
