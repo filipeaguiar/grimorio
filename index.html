@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#070509">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Grimório RPG</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <!-- Google Fonts for a classic fantasy RPG aesthetic -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <!-- RPG Awesome Font Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/rpg-awesome@0.2.0/css/rpg-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <header class="app-header">
+      <div class="logo">
+        <i class="ra ra-burning-book logo-icon"></i>
+        <h1>Grimório</h1>
+      </div>
+      <div class="header-actions">
+        <nav class="app-tabs">
+          <button id="tab-play" class="tab-btn active icon-only-btn" onclick="switchTab('play')" title="Jogo">
+            <i class="ra ra-crossed-swords tab-icon"></i>
+          </button>
+          <button id="tab-edit" class="tab-btn icon-only-btn" onclick="switchTab('edit')" title="Editor">
+            <i class="ra ra-quill-ink tab-icon"></i>
+          </button>
+        </nav>
+        <div class="quick-actions">
+          <button id="btn-toggle-edit-slots" class="action-btn secondary-btn icon-only-btn" onclick="toggleEditSlotsMode()" title="Ajustar Cargas">
+            <i class="ra ra-health-increase btn-icon"></i>
+          </button>
+          <button id="btn-reset" class="action-btn secondary-btn icon-only-btn" onclick="resetAllSlots()" title="Descanso Longo">
+            <i class="ra ra-cycle btn-icon"></i>
+          </button>
+          <button id="btn-save" class="action-btn primary-btn icon-only-btn" onclick="saveEditorContent()" title="Salvar Grimório" style="display: none;">
+            <i class="ra ra-save btn-icon"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="app-content">
+      <!-- Play View -->
+      <section id="view-play" class="view active">
+        <div class="sub-tabs-bar">
+          <button id="sub-tab-arcano" class="sub-tab-btn active" onclick="switchSpellTab('arcano')">
+            <i class="ra ra-crystal-wand"></i> Arcanas
+          </button>
+          <button id="sub-tab-necromante" class="sub-tab-btn" onclick="switchSpellTab('necromante')">
+            <i class="ra ra-desert-skull"></i> Necromante
+          </button>
+          <button id="sub-tab-divina" class="sub-tab-btn" onclick="switchSpellTab('divina')">
+            <i class="ra ra-sun"></i> Divinas
+          </button>
+        </div>
+        <div id="grimorio-container" class="grimorio-grid">
+          <!-- Dynamic spell circles will be rendered here -->
+        </div>
+      </section>
+
+      <!-- Edit View -->
+      <section id="view-edit" class="view">
+        <div class="editor-header">
+          <h2>Edição do Grimório</h2>
+          <p class="help-text">Use <code># Categoria</code> para círculos/títulos e <code>Nome da Magia</code> nas linhas abaixo.</p>
+        </div>
+        <textarea id="editor-textarea" spellcheck="false" placeholder="# Categoria&#10;Magia"></textarea>
+
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <p>Grimório RPG - Old Dragon & Custom Spells Companion</p>
+    </footer>
+  </div>
+
+  <div id="spell-modal" class="modal-overlay" onclick="handleOverlayClick(event)">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeSpellModal()">&times;</button>
+      <div id="modal-spell-details">
+        <!-- Dynamic content will be rendered here -->
+      </div>
+    </div>
+  </div>
+
+  <script src="spells_data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
