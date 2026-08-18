@@ -199,11 +199,20 @@ function getCharacterLevel() {
 }
 
 function setCharacterLevel(lvl) {
-  const safeLvl = Math.max(1, Math.min(20, parseInt(lvl, 10) || 1));
+  const safeLvl = Math.max(1, Math.min(30, parseInt(lvl, 10) || 1));
   localStorage.setItem('grimorio_char_level', safeLvl.toString());
+  const input = document.getElementById('char-level-input');
+  if (input && parseInt(input.value, 10) !== safeLvl) input.value = safeLvl;
   const display = document.getElementById('char-level-display');
   if (display) display.textContent = safeLvl;
   renderPlayView(editorTextarea.value);
+}
+
+function onLevelInputChange(val) {
+  const lvl = parseInt(val, 10);
+  if (!isNaN(lvl) && lvl >= 1) {
+    setCharacterLevel(lvl);
+  }
 }
 
 function changeCharacterLevel(delta) {
@@ -390,8 +399,10 @@ document.addEventListener('DOMContentLoaded', () => {
       .catch((err) => console.warn('Erro ao registrar Service Worker:', err));
   }
 
-  // Initialize character level display
+  // Initialize character level display / input
   const charLvl = getCharacterLevel();
+  const input = document.getElementById('char-level-input');
+  if (input) input.value = charLvl;
   const display = document.getElementById('char-level-display');
   if (display) display.textContent = charLvl;
 

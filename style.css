@@ -300,14 +300,34 @@ body {
   transform: scale(0.95);
 }
 
-.level-display-value {
+.level-display-value,
+.level-input {
   font-family: var(--font-title);
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 900;
   color: #ffffff;
-  min-width: 1.2rem;
+  width: 2.2rem;
   text-align: center;
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
   text-shadow: 0 0 8px rgba(255, 215, 102, 0.5);
+  -moz-appearance: textfield;
+  padding: 0;
+  margin: 0;
+}
+
+.level-input:focus {
+  background: rgba(255, 215, 102, 0.1);
+  border-radius: 4px;
+  box-shadow: 0 0 8px rgba(255, 215, 102, 0.3);
+}
+
+.level-input::-webkit-outer-spin-button,
+.level-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 /* Grid & Circle Card Layout */

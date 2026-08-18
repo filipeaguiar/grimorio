@@ -1,4 +1,4 @@
-const CACHE_NAME = 'grimorio-v6';
+const CACHE_NAME = 'grimorio-v7';
 const ASSETS = [
   './',
   './index.html',
@@ -14,6 +14,7 @@ const ASSETS = [
 ];
 
 self.addEventListener('install', (e) => {
+  self.skipWaiting();
   e.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(ASSETS);
@@ -23,26 +24,41 @@ self.addEventListener('install', (e) => {
 
 self.addEventListener('activate', (e) => {
   e.waitUntil(
-    caches.keys().then((keys) => {
-      return Promise.all(
-        keys.map((key) => {
-          if (key !== CACHE_NAME) {
-            return caches.delete(key);
-          }
-        })
-      );
-    })
+    Promise.all([
+      self.clients.claim(),
+      caches.keys().then((keys) => {
+        return Promise.all(
+          keys.map((key) => {
+            if (key !== CACHE_NAME) {
+              return caches.delete(key);
+            }
+          })
+        );
+      })
+    ])
   );
 });
 
 self.addEventListener('fetch', (e) => {
+  // Network-first for local JS and HTML to ensure immediate updates
+  if (e.request.url.includes('.js') || e.request.url.includes('.html') || e.request.mode === 'navigate') {
+    e.respondWith(
+      fetch(e.request)
+        .then((response) => {
+          if (response && response.status === 200) {
+            const responseClone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(e.request, responseClone));
+          }
+          return response;
+        })
+        .catch(() => caches.match(e.request).then((res) => res || caches.match('./index.html')))
+    );
+    return;
+  }
+
   e.respondWith(
     caches.match(e.request).then((cachedResponse) => {
-      // Return cached asset, otherwise fetch from network
-      return cachedResponse || fetch(e.request).catch(() => {
-        // Fallback for offline if request fails and is not cached
-        return caches.match('./index.html');
-      });
+      return cachedResponse || fetch(e.request);
     })
   );
 });
