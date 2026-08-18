@@ -1,0 +1,13 @@
+{
+  "name": "grimorio",
+  "version": "1.0.0",
+  "description": "Grimório e Gerenciador de Magias para RPG OSR / Old Dragon",
+  "main": "app.js",
+  "scripts": {
+    "build": "node --check app.js && node --check spells_data.js && node --check sw.js",
+    "import:spells": "node import_spells.js"
+  },
+  "keywords": ["rpg", "olddragon", "grimorio", "spells", "osr"],
+  "author": "Filipe Aguiar",
+  "license": "MIT"
+}
