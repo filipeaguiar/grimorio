@@ -28,35 +28,35 @@ const SPELL_DESCRIPTIONS = {
     alcance: "18m",
     duracao: "Instantânea",
     resistencia: "Nenhuma",
-    descricao: "Esta magia abre portas trancadas, emperradas ou fechadas magicamente (como por Cerrar Portas). Ela também abre baús e outros recipientes travados."
+    descricao: "Esta magia abre portas trancadas, emperradas, barradas ou fechadas magicamente (como por Trancar ou Cerrar Portas). Ela também abre baús, caixas, cofres, grilhões e outros recipientes travados.\n\nSe conjurada contra uma porta fechada por Cerrar Portas, a magia Abrir cancela o efeito de fechamento mágico. Se utilizada em uma porta trancada por Trancar, Abrir destranca a passagem por 1 rodada inteira antes que o fecho magnético volte a selar-se. A magia não desarma armadilhas mecânicas ou mágicas associadas à fechadura, as quais são disparadas normalmente."
   },
   "Cerrar Portas": {
     circulo: "1º Círculo (Arcano)",
     alcance: "18m",
     duracao: "2d6 turnos",
     resistencia: "Nenhuma",
-    descricao: "Esta magia mantém uma porta, portão ou janela firmemente fechada. Criaturas extra-planares ou magos de nível superior ao conjurador podem abri-la normalmente."
+    descricao: "Esta magia mantém uma porta, portão, alçapão ou janela firmemente fechada e travada por meios místicos.\n\nCriaturas extra-planares ou magos de nível superior ao do conjurador podem forçar e abrir a passagem normalmente. A magia Abrir dissipa e anula imediatamente o efeito de Cerrar Portas."
   },
   "Disco Flutuante": {
     circulo: "1º Círculo (Arcano)",
     alcance: "2m",
     duracao: "6 turnos",
     resistencia: "Nenhuma",
-    descricao: "Cria um plano circular horizontal invisível com 90 cm de diâmetro que flutua a 90 cm do chão e segue o conjurador, capaz de carregar até 250 kg de peso."
+    descricao: "Cria um plano circular horizontal côncavo e quase translúcido com 90 cm de diâmetro que flutua a 90 cm do chão e acompanha os movimentos do conjurador.\n\nO disco pode carregar até 250 kg de peso (ouro, tesouros, equipamentos ou companheiros feridos). Ele flutua suavemente sobre terrenos acidentados, escadas e buracos, mas não pode se afastar a mais de 2 metros do mago. Caso o conjurador se mova mais rápido que seu deslocamento normal ou se a duração expirar, o disco se dissipa lentamente, depositando a carga suavemente no chão."
   },
   "Escudo Arcano": {
     circulo: "1º Círculo (Arcano)",
     alcance: "Pessoal",
     duracao: "2 turnos",
     resistencia: "Nenhuma",
-    descricao: "Cria uma barreira de força invisível. Concede +4 na CA contra ataques físicos. Além disso, absorve e anula completamente qualquer dano de Mísseis Mágicos direcionados a você. Se sua CA base já for 14 ou mais, o bônus não acumula, mas a imunidade a Mísseis Mágicos continua ativa."
+    descricao: "Cria uma barreira mágica invisível e protetora que envolve o conjurador. Concede um bônus de +4 na Classe de Armadura (CA) contra ataques físicos e projéteis normais.\n\nAlém disso, o Escudo Arcano absorve, anula e dissipa completamente qualquer dano de Mísseis Mágicos direcionados ao conjurador enquanto a magia estiver ativa. Se a CA base natural ou mágica do mago já for 14 ou superior, o bônus numérico não se acumula, mas a imunidade total a Mísseis Mágicos permanece plenamente ativa."
   },
   "Escuridão": {
     circulo: "1º Círculo (Arcano)",
     alcance: "36m",
     duracao: "6 turnos",
     resistencia: "Nenhuma",
-    descricao: "Cria uma esfera de 6 metros de raio de escuridão total e impenetrável. Fontes de luz normais não funcionam em seu interior."
+    descricao: "Cria uma esfera impenetrável de escuridão total com 6 metros de raio a partir do ponto focal escolhido dentro do alcance.\n\nFontes de luz normais (como tochas, lanternas e fogueiras) não funcionam e não produzem qualquer claridade em seu interior. Criaturas que dependem de visão normal ou infravisão ficam completamente cegas dentro da área de efeito. A magia Luz lançada diretamente sobre a área anula mutuamente ambas as magias."
   },
   "Identificação": {
     circulo: "Mago 1 (1º Círculo Arcano)",
@@ -70,35 +70,35 @@ const SPELL_DESCRIPTIONS = {
     alcance: "36m",
     duracao: "12 turnos",
     resistencia: "JPD anula (se conjurada nos olhos)",
-    descricao: "Cria uma esfera de luz brilhante de 6 metros de raio. Pode ser lançada em um objeto ou criatura. Se lançada contra os olhos de um inimigo que falhe na JPD, ele fica cego pela duração da magia."
+    descricao: "Cria uma esfera de luz brilhante e límpida com 6 metros de raio. Pode ser lançada em um ponto fixo no espaço, em um objeto transportável (como uma moeda, cajado ou pedra) ou em uma criatura.\n\nSe for conjurada diretamente contra os olhos de um inimigo dentro do alcance, a vítima tem direito a um teste de JPD. Se falhar, ficará cega pela duração total da magia, sofrendo penalidade de -4 em jogadas de ataque e perda de bônus de Destreza na CA. Conjurada contra Escuridão, anula mutuamente o efeito."
   },
   "Mísseis Mágicos": {
     circulo: "1º Círculo (Arcano)",
     alcance: "45m",
     duracao: "Instantânea",
     resistencia: "Nenhuma",
-    descricao: "Cria um projétil de energia mística que atinge infalivelmente o alvo escolhido (dano de 1d4+1). Você cria 1 míssil a cada 3 níveis de conjurador (máximo de 5 mísseis no 13º nível). Mísseis adicionais podem ser disparados contra alvos diferentes a até 18m de distância."
+    descricao: "O mago estende a mão e dispara dardos teleguiados de pura energia arcana que atingem infalivelmente seus alvos, sem necessidade de jogada de ataque. Cada míssil causa 1d4+1 pontos de dano místico.\n\nO conjurador cria 1 míssil no 1º nível, e +1 míssil adicional a cada 3 níveis de experiência (2 mísseis no 4º nível, 3 no 7º, 4 no 10º, até o máximo de 5 mísseis no 13º nível). Múltiplos mísseis podem ser concentrados em um único alvo ou divididos entre vários alvos visíveis que estejam a até 18 metros de distância entre si."
   },
   "Patas de Aranha": {
     circulo: "1º Círculo (Arcano)",
     alcance: "Toque",
     duracao: "3 turnos + 1 turno/nível",
     resistencia: "Nenhuma",
-    descricao: "Permite à criatura tocada caminhar e escalar paredes, tetos e superfícies verticais com as mãos e pés livres, como se fosse uma aranha."
+    descricao: "Ao tocar uma criatura voluntária, o mago concede a habilidade de escalar paredes verticais, penhascos e até caminhar de cabeça para baixo em tetos lisos como se fosse uma aranha.\n\nO alvo deve estar com as mãos e pés livres para escalar com firmeza, mantendo metade do seu deslocamento padrão. Objetos pesados carregados podem exigir testes de equilíbrio a critério do Mestre."
   },
   "Trancar": {
     circulo: "1º Círculo (Arcano)",
     alcance: "Toque",
     duracao: "Permanente",
     resistencia: "Nenhuma",
-    descricao: "Tranca magneticamente e de forma permanente uma porta, portão ou baú. Pode ser aberta normalmente apenas por meio da magia Abrir ou se for dissipada."
+    descricao: "Tranca mística e magneticamente uma porta, portão, baú, sarcófago ou passagem com fecho de forma permanente.\n\nA fechadura não pode ser aberta por arrombamento comum ou gazuas normais de ladrão. Ela só pode ser aberta através de uma magia Abrir (que libera a tranca por 1 rodada), por um Dissipar Magia bem-sucedido ou por criaturas com 3 ou mais Dados de Vida superiores ao nível do conjurador forçando a passagem."
   },
   "Ventriloquismo": {
     circulo: "1º Círculo (Arcano)",
     alcance: "18m",
     duracao: "2 turnos",
     resistencia: "Nenhuma",
-    descricao: "Faz com que a voz do conjurador pareça emanar de outro local, objeto ou criatura dentro do alcance."
+    descricao: "Faz com que a voz do conjurador ou qualquer outro som vocal desejado pareça originar-se de outro ponto, objeto, estátua ou criatura dentro do alcance.\n\nOuvintes que desconfiarem do som e examinarem atentamente podem realizar um teste de Sabedoria/JPS para perceber a ilusão acústica."
   },
 
   // 2º Círculo Arcano
@@ -114,21 +114,21 @@ const SPELL_DESCRIPTIONS = {
     alcance: "18m",
     duracao: "5 turnos",
     resistencia: "Nenhuma",
-    descricao: "Permite ver claramente criaturas e objetos invisíveis, escondidos, camuflados ou mesmo no plano etéreo."
+    descricao: "Concede ao conjurador a visão límpida e precisa de tudo que esteja invisível, camuflado magicamente, escondido nas sombras ou existente no Plano Etéreo em um cone visual de 18 metros.\n\nCriaturas e objetos invisíveis aparecem com um contorno translúcido brilhante, permitindo que sejam atacados e alvejados sem penalidades de invisibilidade."
   },
   "Flecha Ácida": {
     circulo: "2º Círculo (Arcano)",
     alcance: "36m",
-    duracao: "Especial",
+    duracao: "Especial (1 rodada + 1 rodada a cada 3 níveis)",
     resistencia: "Nenhuma",
-    descricao: "Cria uma flecha mágica de ácido que exige uma jogada de ataque à distância. Causa 2d4 de dano de ácido imediatamente e continua causando dano nas rodadas seguintes dependendo do nível."
+    descricao: "Cria um projétil cintilante de ácido corrosivo concentrado que é disparado contra um alvo dentro do alcance. O conjurador realiza uma jogada de ataque à distância (com bônus de conjuração).\n\nAo acertar, causa 2d4 pontos de dano de ácido imediatamente e continua causando mais 2d4 pontos de dano a cada rodada subsequente. A duração do ácido dura 1 rodada no 3º nível e aumenta em +1 rodada a cada 3 níveis adicionais do conjurador (2 rodadas no 6º nível, 3 no 9º, etc.)."
   },
   "Invisibilidade": {
     circulo: "2º Círculo (Arcano)",
     alcance: "Toque",
     duracao: "Permanente até ser quebrada",
     resistencia: "Nenhuma",
-    descricao: "Torna a criatura tocada invisível, incluindo suas roupas e pertences. O efeito acaba se o alvo realizar qualquer ataque ou conjurar uma magia."
+    descricao: "Torna a criatura tocada completamente invisível aos olhos normais e infravisão, incluindo todas as suas vestimentas, armas e itens que estiver carregando.\n\nA invisibilidade permanece ativa até que seja dissipada ou até que a criatura realize uma ação hostil, execute um ataque ou conjure qualquer magia, momento no qual a ilusão se desfaz instantaneamente."
   },
   "Pedra Mágica": {
     circulo: "Mago 2 (2º Círculo Arcano)",
@@ -142,14 +142,14 @@ const SPELL_DESCRIPTIONS = {
     alcance: "9m",
     duracao: "1 rodada",
     resistencia: "Nenhuma",
-    descricao: "Reduz drasticamente a velocidade de queda livre de criaturas ou objetos na área de efeito, eliminando qualquer dano de queda."
+    descricao: "Reduz instantaneamente a velocidade terminal de queda de até 10 criaturas ou objetos que estejam despencando no ar dentro do alcance para apenas 30 centímetros por segundo.\n\nCriaturas sob o efeito de Queda Suave pousam suavemente em pé e não sofrem nenhum dano de queda, independentemente da altura de onde tenham caído."
   },
   "Teia": {
     circulo: "2º Círculo (Arcano)",
     alcance: "9m",
     duracao: "2 turnos",
     resistencia: "JPF anula/reduz",
-    descricao: "Cria uma teia densa e pegajosa que prende criaturas numa área de 6m cúbicos. Para escapar, exige-se testes de força física ou queimar as teias."
+    descricao: "Dispara e expande uma massa densa de teias pegajosas e extremamente resistentes que preenche um cubo de até 6 metros de lado entre dois suportes sólidos.\n\nQualquer criatura na área no momento da conjuração deve realizar uma JPF: se falhar, fica completamente presa e incapaz de se mover ou atacar; se passar, consegue se mover a 1 metro por rodada. As teias são inflamáveis: atear fogo causa 2d4 pontos de dano a quem estiver preso nelas e queima a teia em 1 rodada."
   },
 
   // 3º Círculo Arcano
@@ -158,14 +158,14 @@ const SPELL_DESCRIPTIONS = {
     alcance: "45m",
     duracao: "Instantânea",
     resistencia: "JPD reduz metade",
-    descricao: "Gera uma explosão esférica de fogo com raio de 6 metros, causando 1d6 pontos de dano por nível de conjurador a todos os alvos na área de efeito."
+    descricao: "Um feixe incandescente parte do dedo indicador do mago e explode em uma esfera estrondosa de fogo com 6 metros de raio no ponto de impacto escolhido dentro do alcance.\n\nTodas as criaturas na área sofrem 1d6 pontos de dano de fogo por nível do conjurador (até o máximo de 10d6 no 10º nível). Uma jogada de proteção de Destreza (JPD) bem-sucedida reduz o dano sofrido à metade. A explosão queima combustíveis leves (papel, pergaminho, madeira fina) e derrete metais macios."
   },
   "Dissipar Magia": {
     circulo: "3º Círculo (Arcano)",
     alcance: "36m",
-    duracao: "Instantânea/Especial",
+    duracao: "Instantânea / Permanente",
     resistencia: "Nenhuma",
-    descricao: "Anula magias e efeitos mágicos ativos na área ou em alvos focados. Não desfaz o efeito de itens mágicos permanentemente, apenas suprime temporariamente."
+    descricao: "Anula, encerra e dissipa magias ativas, encantamentos, maldições temporárias e efeitos arcanos ou divinos em uma criatura, objeto ou em um cubo de 6 metros de lado.\n\nEfeitos mágicos permanentes em itens mágicos não são destruídos, mas são suprimidos e tornados inertes por 1d6 turnos. Magias conjuradas por magos de nível superior ao do dissipador podem exigir teste de conjurador para serem anuladas com sucesso."
   },
   "Forma Ectoplásmica": {
     circulo: "Mago 3 (3º Círculo Arcano)",
@@ -179,14 +179,14 @@ const SPELL_DESCRIPTIONS = {
     alcance: "45m",
     duracao: "Instantânea",
     resistencia: "JPD reduz metade",
-    descricao: "Gera uma descarga elétrica linear de 1,5m de largura por 18m de comprimento, causando 1d6 pontos de dano de eletricidade por nível de conjurador a tudo em seu caminho. Pode rebater em superfícies sólidas."
+    descricao: "Gera uma poderosa descarga elétrica retilínea de 1,5 metro de largura por 18 metros de comprimento que irrompe a partir do conjurador ou do ponto de alcance desejado.\n\nTodas as criaturas atravessadas pela linha sofrem 1d6 pontos de dano elétrico por nível de conjurador (máximo de 10d6). Um teste de JPD bem-sucedido reduz o dano à metade. Se o relâmpago atingir uma parede ou barreira sólida resistente antes de completar seus 18m de extensão, ele ricocheteia e dobra de volta na direção do conjurador."
   },
   "Voo": {
     circulo: "3º Círculo (Arcano)",
     alcance: "Toque",
     duracao: "1 turno/nível + 1d6 turnos",
     resistencia: "Nenhuma",
-    descricao: "Permite ao alvo voar com velocidade de movimento 12. Ele pode subir, descer e pairar no ar livremente."
+    descricao: "Concede à criatura tocada o poder de voar pelos céus com velocidade de deslocamento 12.\n\nO alvo pode subir, descer, planar e pairar imóvel no ar livremente sem esforço, podendo realizar ataques e conjurar magias em pleno ar. Quando a duração da magia está prestes a expirar, o alvo desce flutuando suavemente até o solo sem sofrer dano."
   },
 
   // 4º Círculo Arcano
@@ -408,6 +408,6 @@ const SPELL_DESCRIPTIONS = {
     alcance: "9m + 3m/nível",
     duracao: "Especial",
     resistencia: "Especial (JPD)",
-    descricao: "Com esta magia, o clérigo escolhe um ponto principal onde ela irá ocorrer (obedecendo o alcance descritivo). Então, em um raio de 12m, pedras gigantes cairão do céu, causando 15d8 pontos de dano, onde um teste de JPD reduzirá à metade. Uma vez que as rochas caiam no chão, quebrando-se, rochas menores se espalharão dentro da mesma área, dessa vez causando 7d8 pontos de dano e tornando a vítima atordoada por 2d4 rodadas. Um sucesso num teste de JPD reduz o dano à metade e evita o atordoamento."
+    descricao: "Com esta magia, o clérigo escolhe um ponto principal onde ela irá ocorrer (obedecendo o alcance descritivo). Então, em um raio de 12m, pedras gigantes cairão do céu, causando 15d8 pontos de dano, onde um teste de JPD reduzirá à metade.\n\nUma vez que as rochas caiam no chão, quebrando-se, rochas menores se espalharão dentro da mesma área, dessa vez causando 7d8 pontos de dano e tornando a vítima atordoada por 2d4 rodadas. Um sucesso num teste de JPD reduz o dano à metade e evita o atordoamento."
   }
 };
